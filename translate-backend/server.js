@@ -30,11 +30,6 @@ app.use(corsMiddleware());
 
 app.use(express.json({ limit: "10kb" }));
 
-// Manejar preflight requests
-app.options("*", (req, res) => {
-  res.status(204).end();
-});
-
 // Endpoint de salud
 app.get("/health", (req, res) => {
   res.json({ status: "ok", message: "Servidor funcionando" });
