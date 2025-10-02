@@ -1,5 +1,5 @@
+// middlewares/corsMiddlewares.js
 import cors from "cors";
-import { FRONTEND_URL } from "../config/env.js";
 
 // Obtener orígenes permitidos desde variable de entorno
 const getFrontendUrls = () => {
@@ -18,11 +18,12 @@ export const corsMiddleware = () => {
       }
 
       // Verificar si el origin está en la lista de permitidos
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
+
+      // Bloquear si el origin no está permitido
+      return callback(new Error(`Not allowed by CORS: ${origin}`));
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"],
