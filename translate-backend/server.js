@@ -1,14 +1,15 @@
 // server.js
 import express from "express";
-import dotenv from "dotenv";
-dotenv.config();
 import helmet from "helmet";
 import { corsMiddleware } from "./middlewares/corsMiddlewares.js";
 import { limiter } from "./utils/rateLimiter.js";
-import { isProduction, PORT, OPENAI_API_KEY } from "./config/env.js";
 import { startOpenAI, trainModel } from "./service/openaiClient.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3001;
+const isProduction = process.env.NODE_ENV === "production";
 
 // Validar variables de entorno críticas
 if (!process.env.OPENAI_API_KEY) {
