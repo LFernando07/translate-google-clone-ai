@@ -19,11 +19,21 @@ if (!process.env.OPENAI_API_KEY) {
 const openai = startOpenAI(process.env.OPENAI_API_KEY);
 
 // Middlewares de seguridad
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
+
 // CORS configurado para múltiples orígenes
 app.use(corsMiddleware());
 
 app.use(express.json({ limit: "10kb" }));
+
+// Manejar preflight requests
+app.options("*", (req, res) => {
+  res.status(204).end();
+});
 
 // Endpoint de salud
 app.get("/health", (req, res) => {
@@ -87,8 +97,17 @@ app.post("/api/translate", limiter, async (req, res) => {
 });
 
 // Manejo de rutas no encontradas
-app.use((req, res) => {
-  res.status(404).json({ error: "Ruta no encontrada" });
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+
+  // Error de CORS específico
+  if (err.message === "Not allowed by CORS") {
+    return res.status(403).json({
+      error: "Acceso denegado: Origin no permitido",
+    });
+  }
+
+  res.status(500).json({ error: "Error interno del servidor" });
 });
 
 // Manejo de errores global
