@@ -1,6 +1,6 @@
-import { type FromLanguage, type Language } from '../types'
+import type { FromLanguage, Language } from "../types.d"
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1234'
 
 export async function translate({
   fromLanguage,
