@@ -1,0 +1,27 @@
+{
+  "name": "translator-backend",
+  "version": "1.0.0",
+  "description": "Backend para aplicación de traducción con OpenAI",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "translator",
+    "openai",
+    "express"
+  ],
+  "author": "Burgos Perea Luis Fernando",
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "openai": "^6.0.0"
+  }
+}

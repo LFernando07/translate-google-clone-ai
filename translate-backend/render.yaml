@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: translator-api
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        sync: false # Configura esto manualmente en Render Dashboard
+      - key: FRONTEND_URL
+        sync: false # Ejemplo: https://tu-app.vercel.app
+    healthCheckPath: /health
